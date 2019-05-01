@@ -9,8 +9,6 @@
 // @supportURL   https://github.com/Mr-xn/modify_freebuf_pic
 // @license      MIT
 // @run-at       document-end
-// @include      http://
-// @include      https://
 // @match        https://www.freebuf.com/*/*.html
 // @grant        unsafeWindow
 // ==/UserScript==
