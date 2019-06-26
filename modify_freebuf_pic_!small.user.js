@@ -2,7 +2,7 @@
 // @name         freebuf文章图片去除!small
 // @icon         https://static.freebuf.com/images/favicon.ico
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Remove the !small appended to the end of the image in the article section of freebuf.com and let the image display the best size instead of the reduced version. You don't need to click to zoom in to view the article.
 // @author       Mrxn
 // @homepage     https://mrxn.net/
@@ -58,7 +58,7 @@ function nolazyload()
     //alert("done"+"\n"+window.location.href);
     }catch(e)
     {
-        alert(e+"\n请将此错误信息发送至\n\nE-mail: admin@mrxn.net");
+        //alert(e+"\n请将此错误信息发送至\n\nE-mail: admin@mrxn.net");
     }
 
     setTimeout(nolazyload,tma);
@@ -83,7 +83,9 @@ window.addEventListener('scroll',function(){
      var imgs =fb_content.getElementsByTagName("img");
      for (var i=0;i<imgs.length;i++){
          // imgs[i].src==imgs[i].parentNode.href;
+         if ( imgs[i].width > 700 ){//对图片宽度小于700的（比如公司logo等）不用缩放
          imgs[i].style.width="100%";
+         }
      }
      fb_content.innerHTML = fb_content.innerHTML.replace(/(!small)/gi,'');
      console.log("移除!small成功！");
