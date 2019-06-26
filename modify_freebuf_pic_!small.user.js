@@ -9,6 +9,8 @@
 // @supportURL   https://github.com/Mr-xn/modify_freebuf_pic
 // @license      MIT
 // @run-at       document-end
+// @include      http://
+// @include      https://
 // @match        https://www.freebuf.com/*/*.html
 // @grant        unsafeWindow
 // ==/UserScript==
@@ -37,7 +39,7 @@ function nolazyload()
         var fb_content =document.getElementById("contenttxt");
         var imgs =fb_content.getElementsByTagName("img");
         // var imgs = document.images;
-        if(imgs.length==0) //页面加载完一个图都没有就跳出
+        if(imgs.length===0) //页面加载完一个图都没有就跳出
         {
             //alert(document.location.href+"nopics");
             return;
@@ -58,7 +60,7 @@ function nolazyload()
     //alert("done"+"\n"+window.location.href);
     }catch(e)
     {
-        //alert(e+"\n请将此错误信息发送至\n\nE-mail: admin@mrxn.net");
+        console.log(e+"\n请将此错误信息发送至\n\nE-mail: admin@mrxn.net");
     }
 
     setTimeout(nolazyload,tma);
@@ -75,15 +77,26 @@ function pic_url_check(picx)
         return false;
     }
 }
-
+//执行一次
+    function once(fn, context) {
+    var result;
+    return function() {
+        if(fn) {
+            result = fn.apply(context || this, arguments);
+            fn = null;
+        }
+        return result;
+    };
+}
 //在滚动加载的时候移除图片!small后缀,修改文章图片width属性为100%.
 function new_img() {
-window.addEventListener('scroll',function(){
+    nolazyload();
+    window.addEventListener('scroll',function(){
      var fb_content =document.getElementById("contenttxt");
      var imgs =fb_content.getElementsByTagName("img");
      for (var i=0;i<imgs.length;i++){
          // imgs[i].src==imgs[i].parentNode.href;
-         if ( imgs[i].width > 700 ){//对图片宽度小于700的（比如公司logo等）不用缩放
+         if ( imgs[i].width > 680 ){//对图片宽度小于700的（比如公司logo等）不用缩放
          imgs[i].style.width="100%";
          }
      }
@@ -91,6 +104,5 @@ window.addEventListener('scroll',function(){
      console.log("移除!small成功！");
      },false);
 }
-nolazyload();
-new_img();
+once(new_img());
 })();
