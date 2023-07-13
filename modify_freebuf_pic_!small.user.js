@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         t00ls文章图片放大｜freebuf文章图片去除!small
+// @name         t00ls｜棱角社区｜freebuf文章图片放大
 // @icon         https://static.freebuf.com/images/favicon.ico
 // @namespace    http://tampermonkey.net/
-// @version      0.5
-// @description  放大t00ls文章中默认的图片大小，方便查看；去除freebuf文章图片的!small。
+// @version      0.6
+// @description  放大t00ls、棱角社区、freebuf文章中默认的图片大小，方便查看；去除freebuf文章图片的!small。
 // @author       Mrxn
 // @homepage     https://mrxn.net/
 // @supportURL   https://github.com/Mr-xn/modify_freebuf_pic
@@ -11,6 +11,7 @@
 // @run-at       document-end
 // @match        https://www.freebuf.com/*/*.html
 // @match        https://www.t00ls.com/*
+// @match        https://forum.ywhack.com/*
 // @grant        unsafeWindow
 // ==/UserScript==
 //thanks https://userscripts-mirror.org/scripts/review/362011
@@ -59,7 +60,29 @@
         document.querySelector("#artical-detail-page > div.container > div.main").style.width="98%";
         document.querySelector("#tinymce-editor").style.maxWidth="98%";
         //document.querySelector("#tinymce-editor > div > p:nth-child(13) > img").style.maxWidth="98%";
-    } else{
+    } else if (window.location.host == 'forum.ywhack.com'){
+        console.log("棱角社区文章图片放大");
+        // 获取所有具有 class="t_msgfont" 的元素
+        var elements = document.getElementsByClassName('t_msgfont');
+
+        // 遍历元素列表
+        for (var i = 0; i < elements.length; i++) {
+            var imgs = elements[i].getElementsByTagName('img');
+
+            // 遍历当前元素下的 img 元素
+            for (var j = 0; j < imgs.length; j++) {
+                var src = imgs[j].getAttribute('src');
+                // 判断 src 属性是否包含 "attachments"
+                if (src.includes('attachments')) {
+                    // 包含 "attachments"，执行相关操作
+                    imgs[j].style.width = '95%';
+                    imgs[j].style.height = '95%';
+                }
+            }
+        }
+
+    }
+    else{
         console.log("暂不支持");
     }
 })();
